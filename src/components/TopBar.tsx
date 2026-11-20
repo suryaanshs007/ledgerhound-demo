@@ -3,6 +3,7 @@ import { Moon, Play, RotateCcw, Sun } from 'lucide-react';
 import { useSim, type Mode } from '../sim/store';
 import { useDirector } from '../sim/director';
 import { LogoMark, Wordmark } from './Logo';
+import { ExplainerButton } from './ExplainerButton';
 
 export function ModeToggle() {
   const mode = useSim((s) => s.mode);
@@ -40,14 +41,19 @@ export function TopBar() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper/85 backdrop-blur-md">
       <div className="mx-auto flex h-[68px] max-w-[1600px] items-center gap-2 px-3 sm:gap-3 md:px-6">
-        <a href="?mode=overview" onClick={(e) => { e.preventDefault(); useSim.getState().setMode('overview'); window.scrollTo({ top: 0 }); }} className="shrink-0" aria-label="LedgerHound home">
-          <span className="hidden sm:inline"><Wordmark /></span>
-          <span className="sm:hidden"><LogoMark /></span>
-        </a>
-        <div className="flex flex-1 justify-center">
+        <div className="flex flex-1 items-center gap-3">
+          <a href="?mode=overview" onClick={(e) => { e.preventDefault(); useSim.getState().setMode('overview'); window.scrollTo({ top: 0 }); }} className="shrink-0" aria-label="LedgerHound home">
+            <span className="hidden sm:inline"><Wordmark /></span>
+            <span className="sm:hidden"><LogoMark /></span>
+          </a>
+          <div className="@container hidden min-w-9 flex-1 lg:flex">
+            <ExplainerButton />
+          </div>
+        </div>
+        <div className="flex shrink-0 justify-center">
           <ModeToggle />
         </div>
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex flex-1 items-center justify-end gap-2">
           <span className="group relative hidden lg:inline-flex">
             <span tabIndex={0} className="cursor-help rounded-full border border-dashed border-line-2 px-3 py-1 text-[14px] font-medium text-muted">Simulated demo · real SHA-256</span>
             <span role="tooltip" className="pointer-events-none absolute right-0 top-full mt-2 w-80 rounded-xl bg-ink p-3.5 text-[14px] leading-snug text-paper opacity-0 shadow-xl transition group-focus-within:opacity-100 group-hover:opacity-100">
@@ -57,7 +63,7 @@ export function TopBar() {
           <button
             onClick={start}
             disabled={active}
-            className="hidden items-center gap-2 rounded-full bg-accent px-4 py-2 text-[15px] font-semibold text-white transition hover:brightness-110 active:scale-[0.97] disabled:opacity-50 md:inline-flex"
+            className="hidden items-center gap-2 whitespace-nowrap rounded-full bg-accent px-4 py-2 text-[15px] font-semibold text-white transition hover:brightness-110 active:scale-[0.97] disabled:opacity-50 md:inline-flex"
           >
             <Play className="size-4 fill-current" aria-hidden /> Run full demo
           </button>
